@@ -26,7 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,7 +36,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="gdalconst_csharp, Version=3.6.2.0, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
@@ -53,6 +53,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -79,7 +80,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\Command.cs" />
+    <Compile Include="ViewModel\Commands\AsyncCommands\AsyncCommand.cs" />
+    <Compile Include="ViewModel\Commands\AsyncCommands\AsyncCommandBase.cs" />
+    <Compile Include="ViewModel\Commands\AsyncCommands\AsyncCommandGeneric.cs" />
+    <Compile Include="ViewModel\Commands\AsyncCommands\IAsyncCommand.cs" />
+    <Compile Include="ViewModel\Commands\AsyncCommands\IAsyncCommandGeneric.cs" />
+    <Compile Include="ViewModel\Commands\ErrorHandlers\IErrorCancelHandler.cs" />
+    <Compile Include="ViewModel\Commands\ErrorHandlers\IErrorNotFoundHandler.cs" />
+    <Compile Include="ViewModel\Commands\ErrorHandlers\ResultNotFoundException.cs" />
+    <Compile Include="ViewModel\Commands\IErrorHandler.cs" />
+    <Compile Include="ViewModel\Commands\QuickCommands\Command.cs" />
+    <Compile Include="ViewModel\Commands\QuickCommands\CommandGeneric.cs" />
+    <Compile Include="ViewModel\Commands\Utilities.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="GdalConfiguration.cs" />
     <Compile Include="View\MainWindow.xaml.cs">

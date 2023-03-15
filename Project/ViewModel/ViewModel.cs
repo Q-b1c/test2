@@ -1,7 +1,10 @@
 ﻿using Microsoft.Win32;
+using OSGeo.GDAL;
+using OSGeo.OGR;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -10,6 +13,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
+using ViewModelBase.Commands.QuickCommands;
+using Color = System.Drawing.Color;
 
 namespace Project
 {
@@ -37,11 +43,24 @@ namespace Project
         {
             if (openFileDialog.ShowDialog() == true)
             {
-                using (var stream = new FileStream(openFileDialog.FileName, FileMode.Open))
-                {
-                    Image = BitmapFrame.Create(stream, BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
-                    OnPropertyChanged("Image");
-                }
+               
+                    Gdal.AllRegister();
+                    Ogr.RegisterAll();
+                    Dataset dataset = Gdal.Open(openFileDialog.FileName, Access.GA_ReadOnly);
+                    Band band = dataset.GetRasterBand(1);
+                    int width = band.XSize;
+                    int height = band.YSize;
+                    int size = width * height;
+                    byte[] data = new byte[width * height];
+                    var arrData = Band.ReadRaster(0, 0, width, height, data, width, height, 0, 0);
+                    int i, j;
+                    for (i = 0; i < width; i++)
+                    {
+                        for (j = 0; j < height; j++)
+                        {
+                            (Convert.ToInt32(data[i + j * width]), Convert.ToInt32(data[i + j * width]), Convert.ToInt32(data[i + j * width]));
+                        }
+                    }
             }
         }
         protected virtual void OnPropertyChanged(
